@@ -11,7 +11,6 @@
       margin: 0;
       min-height: 100vh;
       background: url('https://wallpapercave.com/wp/wp2757874.gif') center/cover no-repeat;
-      position: relative;
       font-family: 'Segoe UI', Arial, sans-serif;
       overflow: hidden;
     }
@@ -26,17 +25,17 @@
       z-index: 1;
     }
     .centerboxes {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      position: absolute;
+      left: 55%;
+      top: 50%;
+      transform: translate(-50%, -55%);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
-      pointer-events: none;
       gap: 36px;
+      width: 100vw;
+      pointer-events: none;
+      z-index: 2;
     }
     .skills-card, .projects-card, .profile-card {
       min-height: 420px;
@@ -248,10 +247,10 @@
       font-weight: 400;
     }
     .music-player {
-      position: absolute;
+      position: fixed;
       left: 50%;
+      bottom: 40px;
       transform: translateX(-50%);
-      bottom: 7%;
       width: 480px;
       background: linear-gradient(90deg, rgba(255,179,44,0.13) 0%, rgba(255,106,0,0.13) 100%), rgba(20, 28, 40, 0.65);
       border-radius: 20px;
@@ -260,16 +259,18 @@
       display: flex;
       align-items: center;
       padding: 18px 28px;
-      z-index: 2;
+      z-index: 3;
       gap: 18px;
       min-height: 80px;
+      pointer-events: auto;
     }
     .music-cover {
       width: 54px;
       height: 54px;
       border-radius: 12px;
       object-fit: cover;
-      margin-right: 14px;
+      align-self: center;
+      margin-left: -2px;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,0.25);
       background: #222c3a;
       display: block;
@@ -357,6 +358,8 @@
       .centerboxes {
         flex-direction: column;
         gap: 18px;
+        transform: translate(-50%, -50%);
+        margin-right: 3in;
       }
       .skills-card, .projects-card {
         min-width: 0;
@@ -402,23 +405,24 @@
         <span class="profile-status" id="profile-status">Loading status...</span>
       </div>
       <div class="profile-links">
-        <a href="http://discord.com/users/1302298138995982397"><i class="fa-brands fa-discord"></i></a>
-        <a href="https://github.com/officialysourced"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-discord"></i></a>
+        <a href="#"><i class="fa-brands fa-roblox"></i></a>
+        <a href="#"><i class="fa-brands fa-spotify"></i></a>
       </div>
       <div class="profile-views" id="profile-views"><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></div>
     </div>
     <div class="projects-card">
       <div class="projects-title">Projects</div>
       <div class="project-list">
-        <div class="project-box" onclick="window.open('https://discord.gg/UTUspYkcNG', '_blank')">
+        <div class="project-box" onclick="window.open('https://discord.gg/vyper', '_blank')">
           <div class="project-logo"><img src="vyper.png" alt="Vyper"></div>
           <div class="project-info">
             <div class="project-name">Vyper</div>
             <div class="project-desc">A proxy development service</div>
           </div>
         </div>
-        <div class="project-box" onclick="window.open('https://discord.gg/D4x36hktKf', '_blank')">
-          <div class="project-logo"><img src="texerum.png" alt="Texerum"></div>
+        <div class="project-box" onclick="window.open('https://discord.gg/texerum', '_blank')">
+          <div class="project-logo"><img src="Texerum.png" alt="Texerm"></div>
           <div class="project-info">
             <div class="project-name">Texerm</div>
             <div class="project-desc">An unblocker with a clean and minimal UI</div>
@@ -438,6 +442,7 @@
         </div>
         <span class="music-time" id="music-duration">0:00</span>
       </div>
+      <div class="music-activity" id="music-activity"></div>
     </div>
     <div class="music-controls" id="music-controls">
       <i class="fa-solid fa-backward" id="music-prev"></i>
@@ -460,6 +465,7 @@
     const profileStatus = document.getElementById('profile-status');
     const profileAvatar = document.getElementById('profile-avatar');
     const viewCountSpan = document.getElementById('view-count');
+    const musicActivity = document.getElementById('music-activity');
     let previewUrl = "";
     let songDuration = 0;
     let songStart = 0;
@@ -560,6 +566,18 @@
       return "Offline";
     }
 
+    function getMusicActivityText(status, activities) {
+      if (activities && activities.some(a => a.name && a.name.toLowerCase().includes("vscode"))) return '<i class="fa-solid fa-code"></i> Coding';
+      if (activities && activities.some(a => a.type === 0 && a.name && a.name.toLowerCase().includes("code"))) return '<i class="fa-solid fa-code"></i> Coding';
+      if (activities && activities.some(a => a.type === 0 && a.name && a.name.toLowerCase().includes("game"))) return '<i class="fa-solid fa-gamepad"></i> Gaming';
+      if (activities && activities.some(a => a.type === 0 && a.name && a.name.toLowerCase().includes("playing"))) return '<i class="fa-solid fa-gamepad"></i> Gaming';
+      if (status === "online") return '<span style="color:#43b581"><i class="fa-solid fa-circle"></i></span> Online';
+      if (status === "idle") return '<span style="color:#faa61a"><i class="fa-solid fa-circle"></i></span> Idle';
+      if (status === "dnd") return '<span style="color:#f04747"><i class="fa-solid fa-minus-circle"></i></span> Do Not Disturb';
+      if (status === "invisible" || status === "offline") return '<span style="color:#747f8d"><i class="fa-solid fa-circle"></i></span> Offline';
+      return '<span style="color:#747f8d"><i class="fa-solid fa-circle"></i></span> Offline';
+    }
+
     async function handleLanyardData(d) {
       if (d.listening_to_spotify && d.spotify) {
         spotifyActive = true;
@@ -575,6 +593,7 @@
           preview_url
         });
         musicPlayer.onclick = () => window.open(s.track_url, "_blank");
+        musicActivity.innerHTML = getMusicActivityText(d.discord_status, d.activities);
       } else if (d.activities && d.activities.length > 0) {
         spotifyActive = false;
         const act = d.activities.find(a => a.type === 0 || a.type === 1 || a.type === 2 || a.type === 4) || d.activities[0];
@@ -590,6 +609,7 @@
           type: act.type
         });
         musicPlayer.onclick = null;
+        musicActivity.innerHTML = getMusicActivityText(d.discord_status, d.activities);
       } else {
         spotifyActive = false;
         setActivityUI({
@@ -597,6 +617,7 @@
           name: "Nothing playing"
         });
         musicPlayer.onclick = null;
+        musicActivity.innerHTML = getMusicActivityText(d.discord_status, d.activities);
       }
       const statusClass = getStatusIcon(d.discord_status, d.activities);
       statusDot.className = "status-dot " + statusClass;
