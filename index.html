@@ -376,10 +376,27 @@
         padding-right: 0;
       }
       .music-player {
-        padding: 12px 8px;
+        width: 96vw;
+        min-width: 0;
+        max-width: 99vw;
+        padding: 12px 6px;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
       }
       .music-title {
-        max-width: 90px;
+        max-width: 80px;
+        font-size: 0.98rem;
+      }
+      .music-cover {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+      }
+      .music-controls i {
+        font-size: 1.1rem;
+        margin-left: 2px;
+        margin-right: 2px;
       }
     }
   </style>
@@ -395,6 +412,7 @@
         <span class="si si-css3"></span>
         <span class="si si-javascript"></span>
         <span class="si si-react"></span>
+        <span class="si si-cplusplus"></span>
       </div>
     </div>
     <div class="profile-card">
