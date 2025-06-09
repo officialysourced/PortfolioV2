@@ -1,0 +1,250 @@
+body {
+
+margin: 0;
+
+font-family: Arial, sans-serif;
+
+background: #f8f9fa;
+
+}
+
+.container {
+
+display: flex;
+
+flex-wrap: wrap;
+
+gap: 20px;
+
+padding: 30px;
+
+}
+
+.sidebar {
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+width: 180px;
+
+gap: 20px;
+
+}
+
+.profile-pic {
+
+width: 80px;
+
+height: 80px;
+
+background: #ccc;
+
+border-radius: 50%;
+
+margin-bottom: 10px;
+
+}
+
+.discord-info {
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+flex-direction: column;
+
+}
+
+.username {
+
+font-weight: bold;
+
+font-size: 1rem;
+
+}
+
+.status-dot {
+
+width: 16px;
+
+height: 16px;
+
+border-radius: 50%;
+
+background: #43b581;
+
+border: 2px solid #fff;
+
+margin-top: 4px;
+
+}
+
+.sidebar-item {
+
+width: 100%;
+
+height: 40px;
+
+background: #e0e0e0;
+
+border-radius: 8px;
+
+}
+
+.main {
+
+display: grid;
+
+grid-template-columns: 1fr 1fr;
+
+grid-template-rows: 180px 80px 80px;
+
+gap: 20px;
+
+flex: 1;
+
+min-width: 500px;
+
+}
+
+.box {
+
+background: #fff;
+
+border-radius: 12px;
+
+padding: 18px;
+
+box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+}
+
+.about {
+
+grid-column: 1 / 2;
+
+grid-row: 1 / 2;
+
+}
+
+.skills {
+
+grid-column: 2 / 3;
+
+grid-row: 1 / 2;
+
+}
+
+.skills-list {
+
+display: flex;
+
+flex-wrap: wrap;
+
+gap: 12px;
+
+margin-top: 10px;
+
+}
+
+.skill {
+
+width: 48px;
+
+height: 48px;
+
+background: #f0f0f0;
+
+border-radius: 8px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-size: 0.9rem;
+
+}
+
+.projects {
+
+grid-column: 1 / 2;
+
+grid-row: 2 / 3;
+
+display: flex;
+
+align-items: center;
+
+}
+
+.project {
+
+display: flex;
+
+align-items: center;
+
+gap: 10px;
+
+}
+
+.project-icon {
+
+width: 40px;
+
+height: 40px;
+
+background: #d1c4e9;
+
+border-radius: 50%;
+
+}
+
+.project-info {
+
+display: flex;
+
+flex-direction: column;
+
+}
+
+.music {
+
+grid-column: 2 / 3;
+
+grid-row: 2 / 3;
+
+display: flex;
+
+align-items: center;
+
+}
+
+@media (max-width: 900px) {
+
+.container {
+
+flex-direction: column;
+
+align-items: stretch;
+
+}
+
+.main {
+
+min-width: unset;
+
+grid-template-columns: 1fr;
+
+grid-template-rows: repeat(4, auto);
+
+}
+
+}
+
